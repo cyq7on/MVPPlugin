@@ -1,3 +1,4 @@
+&config&
 
 public class &Presenter& extends BaseRxLifePresenter<&Contract&.IView> implements &Contract&.IPresenter{
     

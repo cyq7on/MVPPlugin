@@ -1,5 +1,7 @@
 package template;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
@@ -60,32 +62,54 @@ public class AndroidMvpAction extends AnAction {
      * 创建MVP架构
      */
     private void createClassMvp(String className) {
+        long currentTimeMillis = System.currentTimeMillis();
         boolean isFragment = className.endsWith("Fragment") || className.endsWith("fragment");
         if (className.endsWith("Fragment") || className.endsWith("fragment") || className.endsWith("Activity") || className.endsWith("activity")) {
             className = className.substring(0,className.length() - 8);
         }
         String path = selectGroup.getPath() + "/" + className.toLowerCase();
         String packageName = path.substring(path.indexOf("java") + 5, path.length()).replace("/", ".");
-        String mvpPath = FileUtil.traverseFolder(path.substring(0, path.indexOf("java")));
-        mvpPath=mvpPath.substring(mvpPath.indexOf("java") + 5, mvpPath.length()).replace("/", ".").replace("\\",".");
-
+//        String mvpPath = FileUtil.traverseFolder(path.substring(0, path.indexOf("java")));
+//        mvpPath=mvpPath.substring(mvpPath.indexOf("java") + 5, mvpPath.length()).replace("/", ".").replace("\\",".");
+        String mvpPath = selectGroup.getPath() + "/mvp";
+        String activityPath = selectGroup.getPath() + "/act";
+        String fragmentPath = selectGroup.getPath() + "/fragment";
+        String presenterPath = selectGroup.getPath() + "/presenter";
+        String contractPath = selectGroup.getPath() + "/contract";
         className = className.substring(0, 1).toUpperCase() + className.substring(1);
 
         System.out.print(mvpPath+"---"+className+"----"+packageName);
 
-        String contract = readFile("Contract.txt").replace("&Contract&", className + "Contract");
-        String presenter = readFile("Presenter.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+
+        String contractConfig = FileUtil.readFile(mvpPath + "/ContractConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+        System.out.println("contractConfig:" + contractConfig);
+
+        String presenterConfig = FileUtil.readFile(mvpPath + "/PresenterConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+        System.out.println("presenterConfig:" + presenterConfig);
+
+        String contract = readFile("Contract.txt").replace("&Contract&", className + "Contract").replace("&config&", contractConfig);
+        String presenter = readFile("Presenter.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter").replace("&config&", presenterConfig);
+
+        writetoFile(contract, contractPath, className + "Contract.java");
+        writetoFile(presenter, presenterPath, className + "Presenter.java");
 
         if (isFragment) {
-            String fragment = readFile("Fragment.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
-            writetoFile(fragment, path, className + "Fragment.java");
-        } else {
-            String activity = readFile("Activity.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Activity&", className + "Activity").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
-            writetoFile(activity, path, className + "Activity.java");
-        }
-        writetoFile(contract, path, className + "Contract.java");
-        writetoFile(presenter, path, className + "Presenter.java");
+            String fragmentConfig = FileUtil.readFile(mvpPath + "/FragmentConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            System.out.println("fragmentConfig:" + fragmentConfig);
 
+            String fragment = readFile("Fragment.txt").replace("&config&", fragmentConfig).replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            writetoFile(fragment, fragmentPath, className + "Fragment.java");
+        } else {
+            String activityConfig = FileUtil.readFile(mvpPath + "/ActivityConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            System.out.println("activityConfig:" + activityConfig);
+
+            String activity = readFile("Activity.txt").replace("&config&", activityConfig).replace("&Activity&", className + "Activity").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            writetoFile(activity, activityPath, className + "Activity.java");
+        }
+
+        long time = (System.currentTimeMillis() - currentTimeMillis) / 1000;
+
+        Messages.showInfoMessage(String.format("耗时%d秒",time),"创建完成");
 
     }
 
@@ -100,6 +124,7 @@ public class AndroidMvpAction extends AnAction {
         }
         return content;
     }
+
 
     private void writetoFile(String content, String filepath, String filename) {
         try {

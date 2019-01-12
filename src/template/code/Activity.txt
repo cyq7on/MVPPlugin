@@ -1,6 +1,16 @@
-
+&config&
 
 
 public class &Activity& extends BaseMvpActivity<&Contract&.IPresenter> implements &Contract&.IView {
 
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @NotNull
+    @Override
+    public Class<? extends &Contract&.IPresenter> registerPresenter() {
+        return &Presenter&.class;
+    }
 }

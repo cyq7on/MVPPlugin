@@ -1,6 +1,17 @@
-
+&config&
 
 
 public class &Fragment& extends BaseMvpFragment<&Presenter&.IPresenter> implements &Contract&.IView {
 
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+
+    @NotNull
+    @Override
+    public Class<? extends &Contract&.IPresenter> registerPresenter() {
+        return &Presenter&.class;
+    }
 }
