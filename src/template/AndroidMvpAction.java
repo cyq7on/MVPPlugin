@@ -107,9 +107,9 @@ public class AndroidMvpAction extends AnAction {
             writetoFile(activity, activityPath, className + "Activity.java");
         }
 
-        long time = (System.currentTimeMillis() - currentTimeMillis) / 1000;
-
-        Messages.showInfoMessage(String.format("耗时%d秒",time),"创建完成");
+//        long time = (System.currentTimeMillis() - currentTimeMillis) / 1000;
+//
+//        Messages.showInfoMessage(String.format("耗时%d秒",time),"创建完成");
 
     }
 
