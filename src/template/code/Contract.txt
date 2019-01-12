@@ -1,21 +1,12 @@
-package &package&;
 
-import android.content.Context;
 
-import &mvp&.BasePresenter;
-import &mvp&.BaseView;
+public interface &Contract& {
 
-/**
- * MVPPlugin
- *  邮箱 784787081@qq.com
- */
+    interface IView extends IViewContract {
 
-public class &Contract& {
-    interface View extends BaseView {
-        
     }
 
-    interface  Presenter extends BasePresenter<View> {
-        
+    interface IPresenter extends IPresenterContract {
+
     }
 }

@@ -10,8 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      修复低版本显示不兼容问题<br>
-    ]]>
+      增加可扩展性<br>]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

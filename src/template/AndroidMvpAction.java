@@ -73,8 +73,8 @@ public class AndroidMvpAction extends AnAction {
 
         System.out.print(mvpPath+"---"+className+"----"+packageName);
 
-        String contract = readFile("Contract.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
-        String presenter = readFile("Presenter.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+        String contract = readFile("Contract.txt").replace("&Contract&", className + "Contract");
+        String presenter = readFile("Presenter.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
 
         if (isFragment) {
             String fragment = readFile("Fragment.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
