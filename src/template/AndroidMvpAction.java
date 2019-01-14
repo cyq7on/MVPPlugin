@@ -97,13 +97,13 @@ public class AndroidMvpAction extends AnAction {
             String fragmentConfig = FileUtil.readFile(mvpPath + "/FragmentConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
             System.out.println("fragmentConfig:" + fragmentConfig);
 
-            String fragment = readFile("Fragment.txt").replace("&config&", fragmentConfig).replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            String fragment = readFile("Fragment.txt").replace("&config&", fragmentConfig).replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter").replace("&className&",className.toLowerCase());
             writetoFile(fragment, fragmentPath, className + "Fragment.java");
         } else {
             String activityConfig = FileUtil.readFile(mvpPath + "/ActivityConfig.txt").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
             System.out.println("activityConfig:" + activityConfig);
 
-            String activity = readFile("Activity.txt").replace("&config&", activityConfig).replace("&Activity&", className + "Activity").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            String activity = readFile("Activity.txt").replace("&config&", activityConfig).replace("&Activity&", className + "Activity").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter").replace("&className&",className.toLowerCase());
             writetoFile(activity, activityPath, className + "Activity.java");
         }
 

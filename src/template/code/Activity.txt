@@ -5,7 +5,7 @@ public class &Activity& extends BaseMvpActivity<&Contract&.IPresenter> implement
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_&className&;
     }
 
     @NotNull
